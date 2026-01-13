@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using student.Domain.Entities;
+using student.Infrastructure.Data;
 
 namespace student.Controllers
 {
@@ -8,20 +10,37 @@ namespace student.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private static readonly List<Student> Students = new List<Student>
-        {
-            new Student { Id = 1, FirstName = "Santi", LastName ="Prueba",Address=" 123 a ", DNI=33333333 },
-            
-            new Student { Id = 2, FirstName = "Santi2", LastName ="Prueba2",Address=" 123 a ", DNI=33333333 },
+        private readonly SchoolDbContext _db;
 
-        };
-        [HttpGet]
-        public ActionResult<IEnumerable<Student>> GetStudents() {
-            return Ok(Students);
+        public StudentsController(SchoolDbContext db)
+        {
+            _db = db;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        {
+            return await _db.Students.ToListAsync();
+        }
 
+        [HttpPost]
+        public async Task<ActionResult<Student>> CreateStudent(Student student)
+        {
+            _db.Students.Add(student);
+            await _db.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetStudentById), new { id = student.Id }, student);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Student>> GetStudentById(int id)
+        {
+            var student = await _db.Students.FindAsync(id);
+
+            if (student == null)
+                return NotFound();
+
+            return student;
+        }
     }
- 
-
 }
