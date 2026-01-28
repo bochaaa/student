@@ -33,6 +33,7 @@ namespace student.Controllers
             }
             return course;
         }
+       
 
         [HttpPost]
         public async Task<ActionResult<Course>> CreateCourse(Course course)
