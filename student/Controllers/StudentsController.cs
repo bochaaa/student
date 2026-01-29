@@ -5,9 +5,10 @@ using student.Domain.Entities;
 using student.Infrastructure.Data;
 
 namespace student.Controllers
-{
-    [Route("api/[controller]")]
+{   
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/students")]
     public class StudentsController : ControllerBase
     {
         private readonly SchoolDbContext _db;
@@ -72,6 +73,24 @@ namespace student.Controllers
             _db.Students.Remove(student);
             await _db.SaveChangesAsync();
             return NoContent();
+        }
+        /// <summary>
+        /// Obtain all courses a student is enrolled in
+        /// </summary>
+        [HttpGet("{id}/courses")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetStudentCourses(int id)
+        {
+            var studentExists = await _db.Students.AnyAsync(s => s.Id == id);
+
+            if (!studentExists)
+                return NotFound("Student does not exist");
+
+            var courses = await _db.Enrollments
+                .Where(e => e.StudentId == id)
+                .Select(e => e.CourseId)
+                .ToListAsync();
+
+            return Ok(courses);
         }
     }
 }

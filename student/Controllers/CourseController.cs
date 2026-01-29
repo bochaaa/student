@@ -5,8 +5,10 @@ using student.Infrastructure.Data;
 
 namespace student.Controllers
 {
-    [Route("api/[controller]")]
+  
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/course")]
     public class CourseController : ControllerBase
     {
         private readonly SchoolDbContext _db;
@@ -33,6 +35,7 @@ namespace student.Controllers
             }
             return course;
         }
+       
 
         [HttpPost]
         public async Task<ActionResult<Course>> CreateCourse(Course course)
