@@ -1,5 +1,5 @@
-﻿namespace student.Domain.Entities
-{
+﻿namespace student.Domain.Entities;
+
     public class Enrollment
     {
         public int Id { get; set; }
@@ -7,4 +7,4 @@
         public int CourseId { get; set; }
         public DateOnly EnrollmentDate { get; set; }
     }
-}
+

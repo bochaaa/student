@@ -1,5 +1,5 @@
-﻿namespace student.Domain.Entities
-{
+﻿namespace student.Domain.Entities;
+
     public class Student
     {
         public int Id { get; set; }
@@ -10,4 +10,3 @@
 
         public string Address { get; set; }
     }
-}

@@ -2,9 +2,9 @@
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace student.Controllers
-{
+namespace student.Controllers;
+
     [Route("api/[controller]")]
     [ApiController]
     public class EnrollmentController : ControllerBase { }
-}
+

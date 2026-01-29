@@ -3,8 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using student.Domain.Entities;
 using student.Infrastructure.Data;
 
-namespace student.Controllers
-{
+namespace student.Controllers;
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : ControllerBase
@@ -42,4 +41,4 @@ namespace student.Controllers
             return CreatedAtAction(nameof(CreateCourse), new { id = course.Id }, course);
         }
     }
-}
+

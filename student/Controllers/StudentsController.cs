@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using student.Domain.Entities;
 using student.Infrastructure.Data;
 
-namespace student.Controllers
-{
+namespace student.Controllers;
+
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
@@ -74,4 +74,4 @@ namespace student.Controllers
             return NoContent();
         }
     }
-}
+
